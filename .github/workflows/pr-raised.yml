@@ -1,0 +1,14 @@
+name: raise PR notification
+on:
+  pull_request:
+    branches:
+      - master
+jobs:
+  notifiy-channel:
+    runs-on: ubuntu-latest    
+    steps:    
+      - name: Notify teams channel of PR
+        uses: toko-bifrost/ms-teams-deploy-card@2.1.2
+        with:
+          github-token: ${{ github.token }}
+          webhook-uri: ${{ secrets.TEAMS_WEBHOOK }}

@@ -1,0 +1,84 @@
+
+#ignore credentials folder for local authentication for aws and terraform providers
+.credentials/
+.credentials/*
+.terraform/
+.terraform/*
+#ignore thumbnails created by windows
+Thumbs.db
+#Ignore files build by Visual Studio
+*.obj
+*.exe
+*.pdb
+*.user
+*.aps
+*.pch
+*.vspscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
+*.lock
+*.idle-shm
+*.idle-wal
+[Bb]in
+[Dd]ebug*/
+*.lib
+*.sbr
+.vs/DemoApp/v15/Server/sqlite3/storage.ide-shm
+.vs/DemoApp/v15/Server/sqlite3/db.lock
+.vs/DemoApp/v15/Server/sqlite3/storage.ide-wal
+*/.vs
+.vs
+obj/
+[Rr]elease*/
+_ReSharper*/
+[Tt]est[Rr]esult*
+packages/
+*/.vs
+/Ozforex.AuthRedirection/.vs/*
+/OzForex.TokenValidator/packages
+*.boltdata
+Deployed
+
+Ozforex.Authentication/Visual Studio 2015/
+*.ncrunchproject
+*.ncrunchsolution
+
+# NCrunch
+*.ncrunch*
+.*crunch*.local.xml
+
+*.origapp.config
+\r\n
+web.config
+\r\n
+.artifact/
+.pipeline/
+.build/
+version.txt
+Package
+OFX.AuthLoopbackClient/.vs/
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+Funds.Api/Funds.Api/Properties/launchSettings.json
+
+.idea/*
+*.xml
+src/Hubble.Api/healthchecksdb
+node_modules/

@@ -1,0 +1,81 @@
+name: teardown branch on pr completion
+on:
+  pull_request:
+    types:
+      - closed
+env:
+  TEAM_NAME: 'data'
+  AWS_DEVELOPMENT_ACCOUNT: '995405243001'
+  PROJECT: 'analytics'
+  APP_NAME: 'event-forwarder'
+  ENVIRONMENT: 'development'
+  BUILD_DIR: ./build
+jobs:
+  tear-down:
+    runs-on: ubuntu-latest    
+    env:
+      TF_ACTIONS_VERSION: 0.12.24
+    steps:   
+     
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+        registry-url: https://npm.pkg.github.com/
+        scope: '@ofx-com'
+    - run: npm install
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.PACKAGE_TOKEN }}
+    - name: Configure environment variables
+      uses: ./node_modules/@ofx-com/github-action-configuration
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.DEVELOPMENT_AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.DEVELOPMENT_AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{env.AWS_REGION}}
+        role-to-assume: arn:aws:iam::${{env.AWS_DEVELOPMENT_ACCOUNT}}:role/delegation/core-pipeline
+        role-duration-seconds: 3600
+        
+    - name: 'Terraform Init'
+      uses: hashicorp/terraform-github-actions@v0.8.0
+      with:
+        tf_actions_version: ${{ env.TF_ACTIONS_VERSION }}
+        tf_actions_subcommand: 'init'
+        tf_actions_working_dir: ${{ env.BUILD_DIR }}
+        args: -backend-config "bucket=ofx-terraform-state-${{env.ENVIRONMENT}}"
+              -backend-config "key=${{env.STACK_NAME}}"
+              -backend-config "region=${{env.AWS_REGION}}"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: 'Terraform Plan Destory'
+      uses: hashicorp/terraform-github-actions@v0.8.0
+      with:
+        tf_actions_version: ${{ env.TF_ACTIONS_VERSION }}
+        tf_actions_subcommand: 'plan'
+        tf_actions_working_dir: ${{ env.BUILD_DIR }}
+        args: 
+              -destroy
+              -out="./destroy-plan"
+              -var="app_s3_key=${{env.APP_S3_KEY}}/eventforwarder_lambda.zip"
+              -var="bucket_name=${{env.LAMBDA_PACKAGE_BUCKET}}"
+              -var="stack_name=${{env.STACK_NAME}}"
+              -var="environment=${{env.ENVIRONMENT}}"
+              -var="is_integrated_stack=${{env.IS_INTEGRATED_STACK}}"                                      
+           
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: 'Terraform Apply Destory'
+      uses: hashicorp/terraform-github-actions@v0.8.0
+      with:
+        tf_actions_version: ${{ env.TF_ACTIONS_VERSION }}
+        tf_actions_subcommand: 'apply'
+        tf_actions_working_dir: ${{ env.BUILD_DIR }}
+        args: "./destroy-plan"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
