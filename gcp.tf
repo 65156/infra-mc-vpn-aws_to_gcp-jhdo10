@@ -89,6 +89,7 @@ resource "google_compute_router" "gcp-router1" {
   }
 }
 
+/*
 module "cloud_router" {
   source  = "terraform-google-modules/cloud-router/google"
   version = "~> 0.2"
@@ -98,6 +99,7 @@ module "cloud_router" {
   region  = "us-central1"
   network = "default"
 }
+*/
 
 resource "google_compute_router_peer" "gcp-router1-peer" {
   name            = "gcp-to-aws-bgp1"

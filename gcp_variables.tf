@@ -2,22 +2,6 @@
 /*
  * Terraform variable declarations for GCP.
  */
-
-variable "gcp_credentials_file_path" {
-  description = "Locate the GCP credentials .json file."
-  type        = string
-}
-
-variable "gcp_project_id" {
-  description = "GCP Project ID."
-  type        = string
-}
-
-variable "gcp_region" {
-  description = "Default to Oregon region."
-  default     = "us-west1"
-}
-
 variable "gcp_instance_type" {
   description = "Machine Type. Correlates to an network egress cap."
   default     = "n1-highmem-8"
