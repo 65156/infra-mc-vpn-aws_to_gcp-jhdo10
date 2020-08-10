@@ -30,10 +30,6 @@ locals {
   gcp_subnetwork = "gcp-ofx-vpchost-management-private01-net-pxn17o"
 }
 
-data "google_compute_zones" "available" {
-  region = var.global["gcp_default_region"]
-}
-
 resource "google_compute_address" "gcp-ip" {
   name   = "gcp-vm-ip-${var.global["gcp_default_region"]}"
   region = var.global["gcp_default_region"]
@@ -42,7 +38,7 @@ resource "google_compute_address" "gcp-ip" {
 resource "google_compute_instance" "gcp-vm" {
   name         = "gcp-vm-${var.global["gcp_default_region"]}"
   machine_type = var.gcp_instance_type
-  zone         = data.google_compute_zones.available.names[0]
+  zone         = var.global["gcp_default_resource_zone"]
 
   boot_disk {
     initialize_params {
@@ -51,7 +47,7 @@ resource "google_compute_instance" "gcp-vm" {
   }
 
   network_interface {
-    subnetwork = google_compute_subnetwork.gcp-subnet1.name
+    subnetwork = local.gcp_subnetwork
     network_ip = var.gcp_vm_address
 
     access_config {
@@ -116,7 +112,7 @@ resource "google_compute_router" "gcp-router1" {
   region  = var.global["gcp_default_region"]
   network = var.global["gcp_network"]
   bgp {
-    asn = aws_customer_gateway.aws-cgw.bgp_asn
+    asn = aws_customer_gateway.cgw-gcp-au.bgp_asn
   }
 }
 
@@ -124,7 +120,7 @@ resource "google_compute_router_peer" "gcp-router1-peer" {
   name            = "gcp-to-aws-bgp1"
   router          = google_compute_router.gcp-router1.name
   region          = google_compute_router.gcp-router1.region
-  peer_ip_address = aws_vpn_connection.vpn-gcp-au-01.tunnel1_vgw_inside_address
+  peer_ip_address = aws_vpn_connection.vpn-gcp-01.tunnel1_vgw_inside_address
   peer_asn        = var.GCP_TUN1_VPN_GW_ASN
   interface       = google_compute_router_interface.router_interface1.name
 }
@@ -133,8 +129,8 @@ resource "google_compute_router_interface" "router_interface1" {
   name       = "gcp-to-aws-interface1"
   router     = google_compute_router.gcp-router1.name
   region     = google_compute_router.gcp-router1.region
-  ip_range   = "${aws_vpn_connection.vpn-gcp-au-01.tunnel1_cgw_inside_address}/${var.GCP_TUN1_CUSTOMER_GW_INSIDE_NETWORK_CIDR}"
-  vpn_tunnel = google_compute_vpn_tunnel.aws-au-01.name
+  ip_range   = "${aws_vpn_connection.vpn-gcp-01.tunnel1_cgw_inside_address}/${var.GCP_TUN1_CUSTOMER_GW_INSIDE_NETWORK_CIDR}"
+  vpn_tunnel = google_compute_vpn_tunnel.vpn-aws-au-a.name
 }
 
 resource "google_compute_router" "gcp-router2" {
@@ -142,7 +138,7 @@ resource "google_compute_router" "gcp-router2" {
   region  = var.global["gcp_default_region"]
   network = var.global["gcp_network"]
   bgp {
-    asn = aws_customer_gateway.aws-cgw.bgp_asn
+    asn = aws_customer_gateway.cgw-gcp-au.bgp_asn
   }
 }
 
@@ -150,7 +146,7 @@ resource "google_compute_router_peer" "gcp-router2-peer" {
   name            = "gcp-to-aws-bgp2"
   router          = google_compute_router.gcp-router2.name
   region          = google_compute_router.gcp-router2.region
-  peer_ip_address = aws_vpn_connection.vpn-gcp-au-01.tunnel2_vgw_inside_address
+  peer_ip_address = aws_vpn_connection.vpn-gcp-01.tunnel2_vgw_inside_address
   peer_asn        = var.GCP_TUN2_VPN_GW_ASN
   interface       = google_compute_router_interface.router_interface2.name
 }
@@ -159,7 +155,7 @@ resource "google_compute_router_interface" "router_interface2" {
   name       = "gcp-to-aws-interface2"
   router     = google_compute_router.gcp-router2.name
   region     = google_compute_router.gcp-router2.region
-  ip_range   = "${aws_vpn_connection.vpn-gcp-au-01.tunnel2_cgw_inside_address}/${var.GCP_TUN2_CUSTOMER_GW_INSIDE_NETWORK_CIDR}"
+  ip_range   = "${aws_vpn_connection.vpn-gcp-01.tunnel2_cgw_inside_address}/${var.GCP_TUN2_CUSTOMER_GW_INSIDE_NETWORK_CIDR}"
   vpn_tunnel = google_compute_vpn_tunnel.vpn-aws-au-b.name
 }
 
@@ -169,8 +165,8 @@ resource "google_compute_router_interface" "router_interface2" {
 
 resource "google_compute_vpn_tunnel" "vpn-aws-au-a" {
   name          = "vpn-aws-au-a"
-  peer_ip       = aws_vpn_connection.vpn-gcp-au-01.tunnel1_address
-  shared_secret = aws_vpn_connection.vpn-gcp-au-01.tunnel1_preshared_key
+  peer_ip       = aws_vpn_connection.vpn-gcp-01.tunnel1_address
+  shared_secret = aws_vpn_connection.vpn-gcp-01.tunnel1_preshared_key
   ike_version   = 1
 
   target_vpn_gateway = google_compute_vpn_gateway.vgw-aws-au.self_link
@@ -190,8 +186,8 @@ resource "google_compute_vpn_tunnel" "vpn-aws-au-a" {
 
 resource "google_compute_vpn_tunnel" "vpn-aws-au-b" {
   name          = "vpn-aws-au-b"
-  peer_ip       = aws_vpn_connection.vpn-gcp-au-01.tunnel2_address
-  shared_secret = aws_vpn_connection.vpn-gcp-au-01.tunnel2_preshared_key
+  peer_ip       = aws_vpn_connection.vpn-gcp-01.tunnel2_address
+  shared_secret = aws_vpn_connection.vpn-gcp-01.tunnel2_preshared_key
   ike_version   = 1
 
   target_vpn_gateway = google_compute_vpn_gateway.vgw-aws-au.self_link

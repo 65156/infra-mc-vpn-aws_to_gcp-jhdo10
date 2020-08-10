@@ -1,7 +1,7 @@
 locals {
   transit_gateway_id = "tgw-067fc30b039641df1"
-  aws_subnet_id = "subnet-5136a434"
-  aws_vpc_id = "vpc-d0b506b5"
+  aws_subnet_id      = "subnet-5136a434"
+  aws_vpc_id         = "vpc-d0b506b5"
 }
 
 /*
