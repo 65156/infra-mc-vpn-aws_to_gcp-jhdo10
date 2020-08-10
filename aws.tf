@@ -69,7 +69,7 @@ resource "aws_customer_gateway" "cgw-gcp-au" {
   type       = "ipsec.1"
 }
 
-resource "aws_vpn_connection" "vpn-gcp-01" {
+resource "aws_vpn_connection" "vpn-gcp-au-01" {
   customer_gateway_id = aws_customer_gateway.cgw-gcp-au.id
   transit_gateway_id  = local.transit_gateway_id
   type                = "ipsec.1"
