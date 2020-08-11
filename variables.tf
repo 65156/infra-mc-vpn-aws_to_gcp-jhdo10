@@ -13,10 +13,6 @@ variable "global" {
   }
 }
 
-/*
- * Terraform variable declarations for GCP.
- */
-
 variable "AWS_BGP_ASN" {
   default = "65100"
 }
