@@ -6,22 +6,22 @@ locals {
   aws_vpc_id         = "vpc-d0b506b5"
 }
 
-resource "aws_customer_gateway" "cgw_gcp_au_01" {
+resource "aws_customer_gateway" "cgw_gcp_au" {
   bgp_asn    = var.GCP_BGP_ASN
   ip_address = google_compute_address.ip_vpn_aws_au.address
 
   type = "ipsec.1"
   tags = {
-    "Name" = "cgw-gcp-au-01"
+    "Name" = "cgw-gcp-au"
   }
 }
 
-resource "aws_vpn_connection" "vpn_gcp_au_01" {
-  customer_gateway_id = aws_customer_gateway.cgw_gcp_au_01.id
+resource "aws_vpn_connection" "vpn_gcp_au" {
+  customer_gateway_id = aws_customer_gateway.cgw_gcp_au.id
   transit_gateway_id  = local.transit_gateway_id
   type                = "ipsec.1"
   static_routes_only  = false
   tags = {
-    "Name" = "vpn-gcp-au-01"
+    "Name" = "vpn-gcp-au"
   }
 }

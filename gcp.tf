@@ -42,7 +42,7 @@ resource "google_compute_router_peer" "vpn_aws_au_peer_01" {
   name                      = "vpn-aws-au-peer-01"
   router                    = google_compute_router.cr_bgp_65200.name
   region                    = google_compute_router.cr_bgp_65200.region
-  peer_ip_address           = aws_vpn_connection.vpn_gcp_au_01.tunnel1_vgw_inside_address
+  peer_ip_address           = aws_vpn_connection.vpn_gcp_au.tunnel1_vgw_inside_address
   peer_asn                  = var.AWS_BGP_ASN
   advertised_route_priority = 100
   interface                 = google_compute_router_interface.vpn_aws_au_interface_01.name
@@ -53,7 +53,7 @@ resource "google_compute_router_peer" "vpn_aws_au_peer_02" {
   name                      = "vpn-aws-au-peer-02"
   router                    = google_compute_router.cr_bgp_65200.name
   region                    = google_compute_router.cr_bgp_65200.region
-  peer_ip_address           = aws_vpn_connection.vpn_gcp_au_01.tunnel2_vgw_inside_address
+  peer_ip_address           = aws_vpn_connection.vpn_gcp_au.tunnel2_vgw_inside_address
   peer_asn                  = var.AWS_BGP_ASN
   advertised_route_priority = 200
   interface                 = google_compute_router_interface.vpn_aws_au_interface_02.name
@@ -64,16 +64,16 @@ resource "google_compute_router_interface" "vpn_aws_au_interface_01" {
   name       = "vpn-aws-au-interface-01"
   router     = google_compute_router.cr_bgp_65200.name
   region     = google_compute_router.cr_bgp_65200.region
-  ip_range   = "${aws_vpn_connection.vpn_gcp_au_01.tunnel1_cgw_inside_address}/30"
-  vpn_tunnel = google_compute_vpn_tunnel.vpn_aws_au_01_tun_01.name
+  ip_range   = "${aws_vpn_connection.vpn_gcp_au.tunnel1_cgw_inside_address}/30"
+  vpn_tunnel = google_compute_vpn_tunnel.vpn_aws_au_tun_01.name
 }
 
 resource "google_compute_router_interface" "vpn_aws_au_interface_02" {
   name       = "vpn-aws-au-interface-02"
   router     = google_compute_router.cr_bgp_65200.name
   region     = google_compute_router.cr_bgp_65200.region
-  ip_range   = "${aws_vpn_connection.vpn_gcp_au_01.tunnel2_cgw_inside_address}/30"
-  vpn_tunnel = google_compute_vpn_tunnel.vpn_aws_au_01_tun_02.name
+  ip_range   = "${aws_vpn_connection.vpn_gcp_au.tunnel2_cgw_inside_address}/30"
+  vpn_tunnel = google_compute_vpn_tunnel.vpn_aws_au_tun_02.name
 }
 
 /*
@@ -110,14 +110,14 @@ resource "google_compute_forwarding_rule" "fr_udp4500" {
 }
 
 resource "google_compute_vpn_gateway" "vgw_aws_au" {
-  name    = "vpngw-aws-au"
+  name    = "vgw-aws-au"
   network = var.global["gcp_network"]
 }
 
-resource "google_compute_vpn_tunnel" "vpn_aws_au_01_tun_01" {
-  name          = "vpn-aws-au-01-tunnel-01"
-  peer_ip       = aws_vpn_connection.vpn_gcp_au_01.tunnel1_address
-  shared_secret = aws_vpn_connection.vpn_gcp_au_01.tunnel1_preshared_key
+resource "google_compute_vpn_tunnel" "vpn_aws_au_tun_01" {
+  name          = "vpn-aws-au-tunnel-01"
+  peer_ip       = aws_vpn_connection.vpn_gcp_au.tunnel1_address
+  shared_secret = aws_vpn_connection.vpn_gcp_au.tunnel1_preshared_key
   ike_version   = 1
 
   target_vpn_gateway = google_compute_vpn_gateway.vgw_aws_au.self_link
@@ -125,10 +125,10 @@ resource "google_compute_vpn_tunnel" "vpn_aws_au_01_tun_01" {
   router = google_compute_router.cr_bgp_65200.name
 }
 
-resource "google_compute_vpn_tunnel" "vpn_aws_au_01_tun_02" {
-  name          = "vpn-aws-au-01-tunnel-02"
-  peer_ip       = aws_vpn_connection.vpn_gcp_au_01.tunnel2_address
-  shared_secret = aws_vpn_connection.vpn_gcp_au_01.tunnel2_preshared_key
+resource "google_compute_vpn_tunnel" "vpn_aws_au_tun_02" {
+  name          = "vpn-aws-au-tunnel-02"
+  peer_ip       = aws_vpn_connection.vpn_gcp_au.tunnel2_address
+  shared_secret = aws_vpn_connection.vpn_gcp_au.tunnel2_preshared_key
   ike_version   = 1
 
   target_vpn_gateway = google_compute_vpn_gateway.vgw_aws_au.self_link
