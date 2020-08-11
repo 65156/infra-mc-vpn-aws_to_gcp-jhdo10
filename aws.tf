@@ -7,7 +7,7 @@ locals {
 }
 
 resource "aws_customer_gateway" "cgw_gcp_au_01" {
-  bgp_asn    = 65200
+  bgp_asn    = var.GCP_BGP_ASN
   ip_address = google_compute_address.gcp_vpn_ip.address
 
   type = "ipsec.1"

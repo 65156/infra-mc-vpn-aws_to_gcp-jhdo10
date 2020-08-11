@@ -30,11 +30,11 @@ locals {
  */
 
 resource "google_compute_router" "core" {
-  name    = "core"
+  name    = "ro-core-01"
   region  = var.global["gcp_default_region"]
   network = var.global["gcp_network"]
   bgp {
-    asn = var.GCP_ASN
+    asn = var.GCP_BGP_ASN
   }
 }
 
@@ -43,7 +43,7 @@ resource "google_compute_router_peer" "tunnel_01" {
   router                    = google_compute_router.core.name
   region                    = google_compute_router.core.region
   peer_ip_address           = aws_vpn_connection.vpn_gcp_au_01.tunnel1_vgw_inside_address
-  peer_asn                  = var.AWS_TUNNEL_ASN
+  peer_asn                  = var.AWS_BGP_ASN
   advertised_route_priority = 100
   interface                 = google_compute_router_interface.a.name
 
@@ -54,7 +54,7 @@ resource "google_compute_router_peer" "tunnel_02" {
   router                    = google_compute_router.core.name
   region                    = google_compute_router.core.region
   peer_ip_address           = aws_vpn_connection.vpn_gcp_au_01.tunnel2_vgw_inside_address
-  peer_asn                  = var.AWS_TUNNEL_ASN
+  peer_asn                  = var.AWS_BGP_ASN
   advertised_route_priority = 200
   interface                 = google_compute_router_interface.b.name
 
@@ -64,7 +64,7 @@ resource "google_compute_router_interface" "a" {
   name       = "gcp-to-aws-interface-a"
   router     = google_compute_router.core.name
   region     = google_compute_router.core.region
-  ip_range   = "${aws_vpn_connection.vpn_gcp_au_01.tunnel1_cgw_inside_address}/${var.AWS_VPN_CIDR}"
+  ip_range   = "${aws_vpn_connection.vpn_gcp_au_01.tunnel1_cgw_inside_address}/30"
   vpn_tunnel = google_compute_vpn_tunnel.vpn_aws_au_01.name
 }
 
@@ -72,7 +72,7 @@ resource "google_compute_router_interface" "b" {
   name       = "gcp-to-aws-interface-b"
   router     = google_compute_router.core.name
   region     = google_compute_router.core.region
-  ip_range   = "${aws_vpn_connection.vpn_gcp_au_01.tunnel2_cgw_inside_address}/${var.AWS_VPN_CIDR}"
+  ip_range   = "${aws_vpn_connection.vpn_gcp_au_01.tunnel2_cgw_inside_address}/30"
   vpn_tunnel = google_compute_vpn_tunnel.vpn_aws_au_02.name
 }
 
@@ -84,6 +84,7 @@ resource "google_compute_address" "gcp_vpn_ip" {
   name   = "gcp-vpn-ip"
   region = var.global["gcp_default_region"]
 }
+
 
 resource "google_compute_forwarding_rule" "fr_esp" {
   name        = "fr-esp"

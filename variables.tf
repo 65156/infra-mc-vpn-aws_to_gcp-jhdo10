@@ -17,16 +17,13 @@ variable "global" {
  * Terraform variable declarations for GCP.
  */
 
-variable "AWS_TUNNEL_ASN" {
-  default = "64512"
+variable "AWS_BGP_ASN" {
+  default = "65100"
 }
 
-variable "GCP_ASN" {
+variable "GCP_BGP_ASN" {
   default = "65200"
 }
 
-variable "AWS_VPN_CIDR" {
-  default = "30"
-}
 
 
