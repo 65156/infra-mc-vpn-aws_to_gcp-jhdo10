@@ -21,86 +21,8 @@
 *  <Author: Fraser Elliot Carter Smith
 */
 
-/*
- * Terraform compute resources for GCP.
- * Acquire all zones and choose one randomly.
- */
-
 locals {
   gcp_subnetwork = "gcp-ofx-vpchost-management-private01-net-pxn17o"
-}
-
-resource "google_compute_address" "gcp-ip" {
-  name   = "gcp-vm-ip-${var.global["gcp_default_region"]}"
-  region = var.global["gcp_default_region"]
-}
-
-resource "google_compute_instance" "gcp-vm" {
-  name         = "gcp-vm-${var.global["gcp_default_region"]}"
-  machine_type = var.gcp_instance_type
-  zone         = var.global["gcp_default_resource_zone"]
-
-  boot_disk {
-    initialize_params {
-      image = var.gcp_disk_image
-    }
-  }
-
-  network_interface {
-    subnetwork = local.gcp_subnetwork
-    network_ip = var.gcp_vm_address
-
-    access_config {
-      # Static IP
-      nat_ip = google_compute_address.gcp-ip.address
-    }
-  }
-
-  # Cannot pre-load both gcp and aws since that creates a circular dependency.
-  # Can pre-populate the AWS IPs to make it easier to run tests.
-  metadata_startup_script = replace(
-    replace(file("vm_userdata.sh"), "<EXT_IP>", aws_eip.aws-ip.public_ip),
-    "<INT_IP>",
-    var.aws_vm_address,
-  )
-}
-
-/*
- * ----------VPN Connection----------
- */
-
-resource "google_compute_address" "vpn-ip-au" {
-  name   = "vpn-ip-au"
-  region = var.global["gcp_default_region"]
-}
-
-resource "google_compute_vpn_gateway" "vgw-aws-au" {
-  name    = "vgw-aws-au"
-  network = var.global["gcp_network"]
-  region  = var.global["gcp_default_region"]
-}
-
-resource "google_compute_forwarding_rule" "fr_esp" {
-  name        = "fr-esp"
-  ip_protocol = "ESP"
-  ip_address  = google_compute_address.vpn-ip-au.address
-  target      = google_compute_vpn_gateway.vgw-aws-au.self_link
-}
-
-resource "google_compute_forwarding_rule" "fr_udp500" {
-  name        = "fr-udp500"
-  ip_protocol = "UDP"
-  port_range  = "500-500"
-  ip_address  = google_compute_address.vpn-ip-au.address
-  target      = google_compute_vpn_gateway.vgw-aws-au.self_link
-}
-
-resource "google_compute_forwarding_rule" "fr_udp4500" {
-  name        = "fr-udp4500"
-  ip_protocol = "UDP"
-  port_range  = "4500-4500"
-  ip_address  = google_compute_address.vpn-ip-au.address
-  target      = google_compute_vpn_gateway.vgw-aws-au.self_link
 }
 
 /*
