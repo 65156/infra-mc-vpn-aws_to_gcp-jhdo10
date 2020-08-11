@@ -1,9 +1,5 @@
 # Multicloud VPN - GCP-AWS VPN
 
-See https://github.com/GoogleCloudPlatform/autonetdeploy-startup.git for the
-required procedure for setting up the environment with credentials for this
-tutorial.
-
 ## References
 
 *   [GCP Cloud VPN Overview](https://cloud.google.com/compute/docs/vpn/overview)
