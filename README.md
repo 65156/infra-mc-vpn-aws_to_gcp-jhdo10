@@ -1,5 +1,7 @@
 # Multicloud VPN - GCP-AWS VPN
 
+Deploys a HA VPN in GCP and AWS, and BGP Peering for ASN's 65100(aws), 65200(gcp)
+
 ## References
 
 *   [GCP Cloud VPN Overview](https://cloud.google.com/compute/docs/vpn/overview)
