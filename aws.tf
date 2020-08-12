@@ -1,6 +1,6 @@
 
 resource "aws_customer_gateway" "cgw_gcp_au" {
-  bgp_asn    = var.GCP_BGP_ASN
+  bgp_asn    = var.gcp_bgp_asn
   ip_address = google_compute_address.ip_vpn_aws_au.address
 
   type = "ipsec.1"

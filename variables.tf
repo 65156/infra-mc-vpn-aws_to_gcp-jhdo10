@@ -13,17 +13,17 @@ variable "global" {
   }
 }
 
-variable "AWS_BGP_ASN" {
+variable "aws_bgp_asn" {
   description = "ASN of the AWS Router"
   default     = "65100"
 }
 
-variable "GCP_BGP_ASN" {
+variable "gcp_bgp_asn" {
   description = "ASN of the GCP Router"
   default     = "65200"
 }
 
-variable "network" {
+variable "gcp_network" {
   description = "VPC to deploy Cloud Router and HA VPN"
   default     = "gcp-ofx-vpchost-management-vpc"
 }
@@ -33,7 +33,7 @@ variable "transit_gateway_id" {
   default     = "tgw-067fc30b039641df1"
 }
 
-variable "aws_vpc_id" {
+variable "aws_network" {
   description = "VPC to deploy the Customer Gateway and VPN"
   default     = "vpc-d0b506b5"
 }        
