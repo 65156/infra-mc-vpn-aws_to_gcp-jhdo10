@@ -1,29 +1,3 @@
-/*
-*                                                                        #
-*    ▄▄▄█████▓▓█████ ▄▄▄       ███▄ ▄███▓          ██▓ ▄████▄  ▓█████     #
-*    ▓  ██▒ ▓▒▓█   ▀▒████▄    ▓██▒▀█▀ ██▒         ▓██▒▒██▀ ▀█  ▓█   ▀     #
-*    ▒ ▓██░ ▒░▒███  ▒██  ▀█▄  ▓██    ▓██░         ▒██▒▒▓█    ▄ ▒███       #
-*    ░ ▓██▓ ░ ▒▓█  ▄░██▄▄▄▄██ ▒██    ▒██          ░██░▒▓▓▄ ▄██▒▒▓█  ▄     #
-*      ▒██▒ ░ ░▒████▒▓█   ▓██▒▒██▒   ░██▒         ░██░▒ ▓███▀ ░░▒████▒    #
-*      ▒ ░░   ░░ ▒░ ░▒▒   ▓▒█░░ ▒░   ░  ░         ░▓  ░ ░▒ ▒  ░░░ ▒░ ░    #
-*        ░     ░ ░  ░ ▒   ▒▒ ░░  ░      ░          ▒ ░  ░  ▒    ░ ░  ░    #
-*      ░         ░    ░   ▒   ░      ░             ▒ ░░           ░       #
-*                ░ OFX INFRASTRUCTURE & CLOUD ENGINEERING         ░  ░    #
-*                                                                         #                                                        
-*          
-*.DESCRIPTION
-*  <Maintains a cloud VPN connection between AWS and GCP>
-*.INPUTS
-*  <
-*.OUTPUTS
-*  <
-*.NOTES
-*  <Author: Fraser Elliot Carter Smith
-*/
-
-locals {
-  gcp_subnetwork = "gcp-ofx-vpchost-management-private01-net-pxn17o"
-}
 
 /*
  * ----------Cloud Router----------
@@ -32,7 +6,7 @@ locals {
 resource "google_compute_router" "cr_bgp_65200" {
   name    = "cr-bgp-65200"
   region  = var.global["gcp_default_region"]
-  network = var.global["gcp_network"]
+  network = var.network
   bgp {
     asn = var.GCP_BGP_ASN
   }
@@ -111,7 +85,7 @@ resource "google_compute_forwarding_rule" "fr_udp4500" {
 
 resource "google_compute_vpn_gateway" "vgw_aws_au" {
   name    = "vgw-aws-au"
-  network = var.global["gcp_network"]
+  network = var.network
 }
 
 resource "google_compute_vpn_tunnel" "vpn_aws_au_tun_01" {

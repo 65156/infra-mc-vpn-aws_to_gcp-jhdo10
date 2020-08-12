@@ -14,12 +14,16 @@ variable "global" {
 }
 
 variable "AWS_BGP_ASN" {
+  description = "ASN of the AWS Router"
   default = "65100"
 }
 
 variable "GCP_BGP_ASN" {
+  description = "ASN of the GCP Router"
   default = "65200"
 }
 
-
-
+variable "network"{
+  description = "VPC to deploy Cloud Router and HA VPN"
+  default = "gcp-ofx-vpchost-management-vpc" 
+}
