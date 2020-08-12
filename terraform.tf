@@ -1,7 +1,7 @@
 terraform {
   backend "gcs" {
-    bucket = "ofx-infrastructure-tf-bkt"
-    prefix = "multicloud-core"
+    bucket = "statefiles-tf-xjdfh2"
+    prefix = "gcp/vpn"
   }
 }
 
