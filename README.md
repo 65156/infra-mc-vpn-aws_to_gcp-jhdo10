@@ -1,29 +1,40 @@
 
-                                                                         #
-    ▄▄▄█████▓▓█████ ▄▄▄       ███▄ ▄███▓          ██▓ ▄████▄  ▓█████     #
-*    ▓  ██▒ ▓▒▓█   ▀▒████▄    ▓██▒▀█▀ ██▒         ▓██▒▒██▀ ▀█  ▓█   ▀     #
-*    ▒ ▓██░ ▒░▒███  ▒██  ▀█▄  ▓██    ▓██░         ▒██▒▒▓█    ▄ ▒███       #
-*    ░ ▓██▓ ░ ▒▓█  ▄░██▄▄▄▄██ ▒██    ▒██          ░██░▒▓▓▄ ▄██▒▒▓█  ▄     #
-*      ▒██▒ ░ ░▒████▒▓█   ▓██▒▒██▒   ░██▒         ░██░▒ ▓███▀ ░░▒████▒    #
-*      ▒ ░░   ░░ ▒░ ░▒▒   ▓▒█░░ ▒░   ░  ░         ░▓  ░ ░▒ ▒  ░░░ ▒░ ░    #
-*        ░     ░ ░  ░ ▒   ▒▒ ░░  ░      ░          ▒ ░  ░  ▒    ░ ░  ░    #
-*      ░         ░    ░   ▒   ░      ░             ▒ ░░           ░       #
-*                ░ OFX INFRASTRUCTURE & CLOUD ENGINEERING         ░  ░    #
-*                                                                         #                                                        
-*          
-*.DESCRIPTION
-*  <Maintains a cloud VPN connection between AWS and GCP>
-*.INPUTS
-*  <
-*.OUTPUTS
-*  <
-*.NOTES
-*  <Author: Fraser Elliot Carter Smith
-*/
-
+                                                                         
+    ▄▄▄█████▓▓█████ ▄▄▄       ███▄ ▄███▓          ██▓ ▄████▄  ▓█████     
+    ▓  ██▒ ▓▒▓█   ▀▒████▄    ▓██▒▀█▀ ██▒         ▓██▒▒██▀ ▀█  ▓█   ▀     
+    ▒ ▓██░ ▒░▒███  ▒██  ▀█▄  ▓██    ▓██░         ▒██▒▒▓█    ▄ ▒███       
+    ░ ▓██▓ ░ ▒▓█  ▄░██▄▄▄▄██ ▒██    ▒██          ░██░▒▓▓▄ ▄██▒▒▓█  ▄     
+      ▒██▒ ░ ░▒████▒▓█   ▓██▒▒██▒   ░██▒         ░██░▒ ▓███▀ ░░▒████▒    
+      ▒ ░░   ░░ ▒░ ░▒▒   ▓▒█░░ ▒░   ░  ░         ░▓  ░ ░▒ ▒  ░░░ ▒░ ░    
+        ░     ░ ░  ░ ▒   ▒▒ ░░  ░      ░          ▒ ░  ░  ▒    ░ ░  ░    
+      ░         ░    ░   ▒   ░      ░             ▒ ░░           ░       
+                ░ OFX INFRASTRUCTURE & CLOUD ENGINEERING         ░  ░    
+                                                                         
 # Multicloud VPN - GCP-AWS VPN
 Deploys a HA VPN in GCP, AWS, and BGP Peering for ASN's 65100(aws), 65200(gcp)
 
+# Variables
+
+   * Name Construction Variables
+    environment and region_shortname are used in the construction of services in both aws and gcp example include"
+    
+    AWS
+    Customer Gateway:
+     cgw-gcp-${var.environment}-${var.region_shortname}
+
+    Examples:
+    "cgw-gcp-mgt-au"
+    "cgw-gcp-dev-au"
+    "cgw-gcp-prd-au"
+
+    GCP
+    VPN Connections, Tunnels etc:
+    vpn-aws-${var.region_shortname}-tunnel-01
+
+    Examples
+    "vpn-aws-au-tunnel-01"
+    "vpn-aws-au-interface-01"
+  */
 
 ## References
 

@@ -1,8 +1,9 @@
 
 module "gcp_aws_vpn_management" {
   source                       = ".//modules/vpn_aws_gcp"
+  #Name Constructor Variables
   environment                  = "mgt"
-  region_shortname             = "au"
+  region_shortname             = "au" 
   #GCP Variables
   gcp_region                   = "australia-southeast1"
   gcp_network                  = "barbados-mgmt-583929"
