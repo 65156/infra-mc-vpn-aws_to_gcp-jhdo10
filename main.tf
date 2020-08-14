@@ -6,7 +6,9 @@ module "gcp_aws_vpn_management" {
   region_shortname             = "au" 
   #GCP Variables
   gcp_region                   = "australia-southeast1"
-  gcp_network                  = "barbados-mgmt-583929"
+  gcp_network                  = "network-management"
+  gcp_project                  = "barbados-mgmt-583929"
+  gcp_network                  = "network-development"
   gcp_bgp_asn                  = "65200"
   #AWS Variables
   aws_region                   = "ap-southeast-2" #AWS Region to deploy in.
@@ -21,7 +23,8 @@ module "gcp_aws_vpn_development" {
   region_shortname             = "au"
   #GCP Variables
   gcp_region                   = "australia-southeast1"
-  gcp_network                  = "barbados-dev-583929"
+  gcp_project                  = "barbados-dev-583929"
+  gcp_network                  = "network-development"
   gcp_bgp_asn                  = "65200"
   #AWS Variables
   aws_region                   = "ap-southeast-2" #AWS Region to deploy in.
@@ -36,7 +39,8 @@ module "gcp_aws_vpn_staging" {
   region_shortname             = "au"
   #GCP Variables
   gcp_region                   = "australia-southeast1"
-  gcp_network                  = "barbados-stage-583929"
+  gcp_project                  = "barbados-stage-583929"
+  gcp_network                  = "network-staging"
   gcp_bgp_asn                  = "65200"
   #AWS Variables
   aws_region                   = "ap-southeast-2" #AWS Region to deploy in.
@@ -51,7 +55,8 @@ module "gcp_aws_vpn_production" {
   region_shortname             = "au"
   #GCP Variables
   gcp_region                   = "australia-southeast1"
-  gcp_network                  = "barbados-prod-583929"
+  gcp_project                  = "barbados-prod-583929"
+  gcp_network                  = "network-production"
   gcp_bgp_asn                  = "65200"
   #AWS Variables
   aws_region                   = "ap-southeast-2" #AWS Region to deploy in.

@@ -14,9 +14,14 @@ variable "gcp_region" {
   default     = "australia-southeast1"
 }
 
+variable "gcp_project" {
+  description = "Project to deploy Cloud Router and HA VPN"
+  default     = ""
+}
+
 variable "gcp_network" {
-  description = "VPC to deploy Cloud Router and HA VPN"
-  default     = "gcp-ofx-vpchost-management-vpc"
+  description = "VPC Network to deploy Cloud Router and HA VPN"
+  default     = ""
 }
 
 variable "gcp_bgp_asn" {

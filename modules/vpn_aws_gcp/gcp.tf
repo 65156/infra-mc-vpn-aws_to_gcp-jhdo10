@@ -2,11 +2,16 @@
 /*
  * ----------Cloud Router----------
  */
+data "google_compute_network" "network" {
+  name = var.gcp_network
+  project = var.gcp_project
+}
+
 
 resource "google_compute_router" "router_01" {
   name    = "cr-bgp-${var.gcp_bgp_asn}"
   region  = var.gcp_region
-  network = var.gcp_network
+  network = google_compute_network.network.name
   bgp {
     asn = var.gcp_bgp_asn
   }
@@ -85,7 +90,7 @@ resource "google_compute_forwarding_rule" "fr_udp4500" {
 
 resource "google_compute_vpn_gateway" "gateway_01" {
   name    = "vgw-aws-${var.region_shortname}"
-  network = var.gcp_network
+  network = google_compute_network.network.name
 }
 
 resource "google_compute_vpn_tunnel" "tunnel_01" {
