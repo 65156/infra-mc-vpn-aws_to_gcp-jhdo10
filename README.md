@@ -11,11 +11,24 @@
                 ░ OFX INFRASTRUCTURE & CLOUD ENGINEERING         ░  ░    
                                                                          
 # Multicloud VPN - GCP-AWS VPN
-Deploys Multiple HA VPN's in GCP (one per environment or project), AWS, and BGP Peering for ASN's 65100(aws), 65200(gcp).
+Deploys Core VPN infrastructure to support cross cloud connectivity and office -> GCP connectivity.
 
-# Variables
+This Project DOES NOT configure Route Tables within the context of VPC Networks in GCP or AWS so no traffic will traverse over these connections.
 
-   ## Name Construction Variables
+## GCP Infrastructure
+Multiple VPN Connections across multiple projects 
++ Cloud Router
++ HA VPN (2 Tunnels)
++ Public IP 
+
+## AWS Infrastructure
+Multiple VPN Connections (One per target GCP project) and associates with Transit Gateway.
++ Customer Gateway
++ VPN Connection (2 Tunnels)
+
+## Variables
+
+   ### Name Construction Variables
     Variables are used in the construction of names for services in both aws and gcp, these include the environment (in the case of gcp) and the region shortname (a short abbreviation or code for the region).
 
     ### Variable Inputs
