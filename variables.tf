@@ -7,7 +7,7 @@ variable "global" {
     "gcp_default_billing_account" = "01B3C9-539FEB-11B3F1"
     "gcp_default_region"          = "australia-southeast1"
     "gcp_default_resource_zone"   = "australia-southeast1-b"
-    "aws_default_region" = "ap-southeast-2"
+    "aws_default_region"          = "ap-southeast-2"
   }
 }
 
@@ -23,7 +23,7 @@ variable "gcp_bgp_asn" {
 
 variable "gcp_network" {
   description = "VPC to deploy Cloud Router and HA VPN"
-  default     = "gcp-ofx-vpchost-management-vpc"
+  default     = ""
 }
 
 variable "transit_gateway_id" {
