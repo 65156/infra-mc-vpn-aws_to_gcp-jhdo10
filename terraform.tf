@@ -6,7 +6,7 @@ terraform {
 }
 
 provider "google" {
-  region  = var.global["gcp_default_region"]
+  region = var.global["gcp_default_region"]
 }
 
 provider "aws" {
