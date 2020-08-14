@@ -15,8 +15,12 @@ Deploys a HA VPN in GCP, AWS, and BGP Peering for ASN's 65100(aws), 65200(gcp)
 
 # Variables
 
-   * Name Construction Variables
-    environment and region_shortname are used in the construction of services in both aws and gcp example include"
+   ## Name Construction Variables
+    Variables are used in the construction of names for services in both aws and gcp, these include the environment (in the case of gcp) and the region shortname (a short abbreviation or code for the region).
+
+    ### Variable Inputs
+    * environment 
+    * region_shortname
     
     AWS
     Customer Gateway:
@@ -28,13 +32,12 @@ Deploys a HA VPN in GCP, AWS, and BGP Peering for ASN's 65100(aws), 65200(gcp)
     "cgw-gcp-prd-au"
 
     GCP
-    VPN Connections, Tunnels etc:
+    VPN Interfaces, Tunnels etc:
     vpn-aws-${var.region_shortname}-tunnel-01
 
     Examples
     "vpn-aws-au-tunnel-01"
     "vpn-aws-au-interface-01"
-  */
 
 ## References
 
