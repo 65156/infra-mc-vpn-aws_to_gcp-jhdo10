@@ -6,7 +6,6 @@ terraform {
 }
 
 provider "google" {
-  project = var.global["gcp_default_project_id"]
   region  = var.global["gcp_default_region"]
 }
 

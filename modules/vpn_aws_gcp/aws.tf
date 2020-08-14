@@ -18,3 +18,5 @@ resource "aws_vpn_connection" "connection_01" {
     "Name" = "vpn-gcp-${var.environment}-${var.region_shortname}"
   }
 }
+
+
