@@ -11,7 +11,7 @@
                 ░ OFX INFRASTRUCTURE & CLOUD ENGINEERING         ░  ░    
                                                                          
 # Multicloud VPN - GCP-AWS VPN
-Deploys a HA VPN in GCP, AWS, and BGP Peering for ASN's 65100(aws), 65200(gcp)
+Deploys Multiple HA VPN's in GCP (one per environment or project), AWS, and BGP Peering for ASN's 65100(aws), 65200(gcp).
 
 # Variables
 
