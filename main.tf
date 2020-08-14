@@ -6,9 +6,8 @@ module "gcp_aws_vpn_management" {
   region_shortname             = "au" 
   #GCP Variables
   gcp_region                   = "australia-southeast1"
-  gcp_network                  = "network-management"
   gcp_project                  = "barbados-mgmt-583929"
-  gcp_network                  = "network-development"
+  gcp_network                  = "network-management"
   gcp_bgp_asn                  = "65200"
   #AWS Variables
   aws_region                   = "ap-southeast-2" #AWS Region to deploy in.
