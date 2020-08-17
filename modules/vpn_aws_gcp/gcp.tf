@@ -38,7 +38,7 @@ resource "google_compute_router_peer" "peer_02" {
 }
 */
 resource "google_compute_router_interface" "interface" {
-  count = 2
+  count      = 2
   name       = "vpn-aws-${var.region_shortname}-interface-0${count.index + 1}"
   router     = google_compute_router.router_01.name
   region     = google_compute_router.router_01.region
@@ -62,7 +62,7 @@ resource "google_compute_router_interface" "interface_02" {
  */
 
 resource "google_compute_vpn_tunnel" "tunnel" {
-  count = 2
+  count         = 2
   name          = "vpn-aws-${var.region_shortname}-tunnel-0${count.index + 1}"
   region        = var.gcp_region
   project       = var.gcp_project
