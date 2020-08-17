@@ -28,7 +28,6 @@ module "gcp_aws_vpn_management" {
   aws_tgw_id  = local.aws_tgw_id  # Transit Gateway ID to associate the VPN Gateway
 }
 
-/*
 module "gcp_aws_vpn_development" {
   source           = ".//modules/vpn_aws_gcp"
   environment      = "dev"
@@ -77,4 +76,3 @@ module "gcp_aws_vpn_production" {
   aws_bgp_asn = local.aws_bgp_asn #BGP ASN to Assign to Interface
   aws_tgw_id  = local.aws_tgw_id  # Transit Gateway ID to associate the VPN Gateway
 }
-*/
