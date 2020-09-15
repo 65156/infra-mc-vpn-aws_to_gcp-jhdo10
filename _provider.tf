@@ -1,7 +1,7 @@
 terraform {
   backend "gcs" {
-    bucket = "statefiles-tf-xjdfh2"
-    prefix = "multicloud/vpn/aws-gcp"
+    bucket = "terraform-statefiles-xjdfh3"
+    prefix = "multicloud/vpn-aws-gcp"
   }
 }
 
