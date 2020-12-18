@@ -18,5 +18,10 @@ resource "aws_vpn_connection" "connection_01" {
     "Name" = "vpn-gcp-${var.environment}-${var.region_shortname}"
   }
 }
-
-
+/*
+resource "null_resource" "set-name-tag" {
+  provisioner "local-exec" {
+    command = "aws ec2 create-tags --resources ${aws_vpn_connection.connection_01.transit_gateway_attachment_id} --tags Key=name,Value=vpn-gcp-${var.environment}-${var.region_shortname}"
+  }
+}
+*/

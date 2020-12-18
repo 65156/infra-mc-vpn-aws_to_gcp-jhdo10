@@ -49,3 +49,19 @@ variable "aws_tgw_id" {
   description = "Transit Gateway ID"
   default     = "tgw-067fc30b039641df1"
 }
+
+variable "gcp_default_region" {
+  default = "australia-southeast1"
+}
+
+variable "aws_default_region" {
+  default = "ap-southeast-2"
+}
+
+variable "custom_ranges" {
+  type = list
+  default = null
+}
+variable "advertise_mode" {
+  default = "DEFAULT"
+}
