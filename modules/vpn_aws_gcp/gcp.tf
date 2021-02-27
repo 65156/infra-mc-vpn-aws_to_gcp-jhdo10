@@ -15,7 +15,6 @@ resource "google_compute_router" "router_01" {
       for_each = var.advertise_mode == "CUSTOM" ? var.custom_ranges : []
       content { 
         range = advertised_ip_ranges.value
-        #description = advertised_ip_ranges.value.description # future feature
       }
     }
   }

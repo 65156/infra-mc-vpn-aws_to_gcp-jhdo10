@@ -13,7 +13,7 @@
 # Multicloud VPN - GCP-AWS VPN
 Deploys Core VPN infrastructure to support cross cloud connectivity and office -> GCP connectivity.
 
-This Project DOES NOT configure Route Tables within the context of VPC Networks in GCP or AWS so no traffic will traverse over these connections.
+This Project DOES NOT configure Route Tables within the context of VPC Networks in AWS so no traffic will traverse over these connections.
 
 ## GCP Infrastructure
 Multiple VPN Connections across multiple projects 
