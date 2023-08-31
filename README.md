@@ -27,6 +27,10 @@ Multiple VPN Connections (One per target GCP project) and associates with Transi
 + Customer Gateway
 + VPN Connection (2 Tunnels)
 
+## Topology
+
+![Topology](https://github.com/frasercarter/infra-mc-vpn-aws_to_gcp-jhdo10/Network-VPN.jpg)
+
 ## Variables
 
    ### Name Construction Variables
