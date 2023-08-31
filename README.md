@@ -29,7 +29,7 @@ Multiple VPN Connections (One per target GCP project) and associates with Transi
 
 ## Topology
 
-![Topology](https://github.com/frasercarter/infra-mc-vpn-aws_to_gcp-jhdo10/Network-VPN.jpg)
+![Topology](https://raw.githubusercontent.com/frasercarter/infra-mc-vpn-aws_to_gcp-jhdo10/fraser/Network-VPN.jpg)
 
 ## Variables
 
