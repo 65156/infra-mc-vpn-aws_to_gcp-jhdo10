@@ -60,7 +60,5 @@ Multiple VPN Connections (One per target GCP project) and associates with Transi
 ## References
 
 *   [GCP Cloud VPN Overview](https://cloud.google.com/compute/docs/vpn/overview)
-*   [GCP Creating a VPN](https://cloud.google.com/compute/docs/vpn/creating-vpns)
 *   [GCP VPN Interoperability Guides](https://cloud.google.com/compute/docs/vpn/interop-guides)
-*   [GCP Creating a HA VPN](https://cloud.google.com/network-connectivity/docs/vpn/how-to/moving-to-ha-vpn)
 *   [AWS VPN Connections](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpn-connections.html)
